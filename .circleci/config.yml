@@ -30,7 +30,7 @@ jobs:
 
       - run:
           name: Send to CodeCov
-          command: bash <(curl -s https://codecov.io/bash) -t '6be86489-623b-4339-8e8b-d4d59324c0b2'
+          command: bash <(curl -s https://codecov.io/bash)
 
 
 workflows:
