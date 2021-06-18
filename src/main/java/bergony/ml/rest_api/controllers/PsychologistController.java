@@ -25,13 +25,13 @@ public class PsychologistController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Psychologist> getAllPsychologists() {
-        return psychologistService.getPsychologists();
+        return psychologistService.getAllPsychologists();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Psychologist createPsychologist(@RequestBody Psychologist psychologist){
-        System.out.println(psychologist);
+        log.debug("Psychologist "+ psychologist);
         return psychologistService.savePsychologist(psychologist);
     }
 
@@ -43,7 +43,7 @@ public class PsychologistController {
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
     public void  deleteById(@PathVariable String id){
-        psychologistService.deleteByid(id);
+        psychologistService.deleteById(id);
     }
 
     @GetMapping("{id}")

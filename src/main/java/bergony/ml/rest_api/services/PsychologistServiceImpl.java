@@ -26,7 +26,7 @@ public class PsychologistServiceImpl implements PsychologistService {
     }
 
     @Override
-    public List<Psychologist> getPsychologists() {
+    public List<Psychologist> getAllPsychologists() {
         List<Psychologist> psychologistList = new ArrayList<>();
         psychologistRepository.findAll().forEach(psychologist -> {
             log.debug("Add the Psychologist: " + psychologist.getName());
@@ -44,11 +44,11 @@ public class PsychologistServiceImpl implements PsychologistService {
     }
 
     @Override
-    public void deleteByid(String id) {
-        Psychologist PsyTodelete = psychologistRepository.findById(id).orElse(null);
+    public void deleteById(String id) {
+        Psychologist PsyToDelete = psychologistRepository.findById(id).orElse(null);
 
-        assert PsyTodelete != null;
-        log.debug("Delete the" + PsyTodelete.getName());
+        assert PsyToDelete != null;
+        log.debug("Delete the" + PsyToDelete.getName());
         psychologistRepository.deleteById(id);
 
     }

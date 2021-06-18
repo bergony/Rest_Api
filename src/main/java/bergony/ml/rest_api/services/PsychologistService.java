@@ -10,11 +10,11 @@ public interface PsychologistService {
 
     Psychologist findById(String id);
 
-    List<Psychologist> getPsychologists();
+    List<Psychologist> getAllPsychologists();
 
     Psychologist savePsychologist(Psychologist psychologist);
 
-    void deleteByid( String id);
+    void deleteById(String id);
 
     void deleteAll();
 

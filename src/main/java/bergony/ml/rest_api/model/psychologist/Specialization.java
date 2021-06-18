@@ -1,10 +1,14 @@
 package bergony.ml.rest_api.model.psychologist;
 
-import lombok.Data;
+import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Data
+
+@Getter
 @Document
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Specialization {
 
         private String id;
