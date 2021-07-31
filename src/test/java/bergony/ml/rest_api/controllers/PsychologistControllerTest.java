@@ -3,11 +3,10 @@ package bergony.ml.rest_api.controllers;
 import bergony.ml.rest_api.model.psychologist.Approach;
 import bergony.ml.rest_api.model.psychologist.Psychologist;
 import bergony.ml.rest_api.model.psychologist.Specialization;
-import bergony.ml.rest_api.services.PsychologistService;
+import bergony.ml.rest_api.services.psychologistService.PsychologistService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import io.swagger.annotations.Api;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,6 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -82,7 +83,7 @@ class PsychologistControllerTest {
     @Test
     void getAllPsychologists() throws Exception {
 
-        List<Psychologist> psychologistList = Arrays.asList(psychologist, psychologist1);
+        Flux<Psychologist> psychologistList = Flux.just( psychologist, psychologist1);
 
         when(psychologistService.getAllPsychologists()).thenReturn(psychologistList);
 
@@ -97,7 +98,7 @@ class PsychologistControllerTest {
     @Test
     void createPsychologist() throws Exception {
 
-        when(psychologistService.savePsychologist(any(Psychologist.class))).thenReturn(psychologist);
+        when(psychologistService.savePsychologist(any(Psychologist.class))).thenReturn(Mono.just(psychologist));
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String json = ow.writeValueAsString(psychologist);
 
@@ -132,7 +133,7 @@ class PsychologistControllerTest {
     @Test
     void getPsychologistById() throws Exception {
 
-        when(psychologistService.findById(anyString())).thenReturn(psychologist);
+        when(psychologistService.findById(anyString())).thenReturn(Mono.just(psychologist));
 
         mockMvc.perform(get(PsychologistController.BASE_URL+"/1")
                 .contentType(MediaType.APPLICATION_JSON))

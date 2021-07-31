@@ -1,29 +1,25 @@
-package bergony.ml.rest_api.model.psychologist;
+package bergony.ml.rest_api.model.client;
 
+import bergony.ml.rest_api.model.psychologist.Approach;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.LinkedList;
-import java.util.List;
-
 @Getter
 @Document
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Psychologist {
+public class Client {
 
     private String id;
 
-    private int numberCRP;
-
     private String name;
 
-    private Approach approach;
+    private String cpf;
 
-    private List<Specialization> specializationList = new LinkedList<>();
+
 
 }

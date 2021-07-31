@@ -4,17 +4,20 @@ import bergony.ml.rest_api.model.psychologist.Approach;
 import bergony.ml.rest_api.model.psychologist.Psychologist;
 import bergony.ml.rest_api.model.psychologist.Specialization;
 import bergony.ml.rest_api.repositories.PsychologistRepository;
+import bergony.ml.rest_api.services.psychologistService.PsychologistService;
+import bergony.ml.rest_api.services.psychologistService.PsychologistServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -64,18 +67,18 @@ class PsychologistServiceImplTest {
     @Test
     void findById() {
 
-        when(psychologistRepository.findById(anyString())).thenReturn(java.util.Optional.ofNullable(psychologist));
+        when(psychologistRepository.findById(anyString())).thenReturn(Mono.just(psychologist));
 
-        Psychologist psychologistReturn = psychologistService.findById(ID);
+        Mono<Psychologist> psychologistReturn = psychologistService.findById(ID);
 
-        Assertions.assertNotNull(psychologistReturn.getId());
-        Assertions.assertEquals(psychologistReturn.getApproach(), approach);
-        Assertions.assertEquals(psychologistReturn.getApproach().getId(), ID);
-        Assertions.assertEquals(psychologistReturn.getApproach().getName(), APPROACH_NAME);
+        Assertions.assertNotNull(psychologistReturn.block().getId());
+        Assertions.assertEquals(psychologistReturn.block().getApproach(), approach);
+        Assertions.assertEquals(psychologistReturn.block().getApproach().getId(), ID);
+        Assertions.assertEquals(psychologistReturn.block().getApproach().getName(), APPROACH_NAME);
 
-        Assertions.assertEquals(psychologistReturn.getSpecializationList(), specializationList);
-        Assertions.assertEquals(psychologistReturn.getSpecializationList().get(0).getId(), ID);
-        Assertions.assertEquals(psychologistReturn.getSpecializationList().get(0).getName(), SPECIALIZATIONS_NAME);
+        Assertions.assertEquals(psychologistReturn.block().getSpecializationList(), specializationList);
+        Assertions.assertEquals(psychologistReturn.block().getSpecializationList().get(0).getId(), ID);
+        Assertions.assertEquals(psychologistReturn.block().getSpecializationList().get(0).getName(), SPECIALIZATIONS_NAME);
 
     }
 
@@ -84,13 +87,13 @@ class PsychologistServiceImplTest {
 
         Psychologist psychologist1 = new Psychologist();
 
-        List<Psychologist> psychologistList = Arrays.asList(psychologist, psychologist1);
+        Flux<Psychologist> psychologistList =Flux.just(psychologist, psychologist1);
 
         when(psychologistRepository.findAll()).thenReturn(psychologistList);
 
-        List<Psychologist> allPsychologist = psychologistService.getAllPsychologists();
+        Flux<Psychologist> allPsychologist = psychologistService.getAllPsychologists();
 
-        Assertions.assertEquals(allPsychologist.size(), 2);
+        Assertions.assertEquals(allPsychologist.collectList().block().size(), 2);
 
 
     }
@@ -98,19 +101,18 @@ class PsychologistServiceImplTest {
     @Test
     void savePsychologist() {
 
-        when(psychologistRepository.save(any(Psychologist.class))).thenReturn(psychologist);
+        when(psychologistRepository.save(any(Psychologist.class))).thenReturn(Mono.just(psychologist));
 
 
-        Psychologist savedPsychologist = psychologistService.savePsychologist(psychologist);
+        Mono<Psychologist> savedPsychologist = psychologistService.savePsychologist(psychologist);
 
-        Assertions.assertEquals(savedPsychologist.getName(), NAME);
-        Assertions.assertEquals(savedPsychologist.getNumberCRP(), NUMBERCRP);
+        Assertions.assertEquals(savedPsychologist.block().getName(), NAME);
+        Assertions.assertEquals(savedPsychologist.block().getNumberCRP(), NUMBERCRP);
     }
 
     @Test
     void deleteByid() {
-
-        when(psychologistRepository.findById(anyString())).thenReturn(Optional.of(psychologist));
+        when(psychologistRepository.findById(anyString())).thenReturn(Mono.just(psychologist));
 
         psychologistService.deleteById(psychologist.getId());
 
@@ -122,7 +124,7 @@ class PsychologistServiceImplTest {
 
         Psychologist psychologist1 = new Psychologist();
 
-        List<Psychologist> psychologistList = Arrays.asList(psychologist, psychologist1);
+        Flux<Psychologist> psychologistList = Flux.just(psychologist, psychologist1);
 
         when(psychologistRepository.findAll()).thenReturn(psychologistList);
 
