@@ -1,7 +1,7 @@
 package bergony.ml.rest_api.controllers;
 
-import bergony.ml.rest_api.model.psychologist.Psychologist;
-import bergony.ml.rest_api.services.psychologistService.PsychologistService;
+import bergony.ml.rest_api.model.client.Client;
+import bergony.ml.rest_api.services.clientService.ClientService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -12,22 +12,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
-@Api(value = "Psychologist Controller", tags = {"Psychologist"})
+@Api(value = "Client Controller", tags = {"Client"})
 @Slf4j
 @RestController
-@RequestMapping(PsychologistController.BASE_URL)
-public class PsychologistController {
+@RequestMapping(ClientController.BASE_URL)
+public class ClientController {
 
-    public static final String BASE_URL = "/psychologist/";
+    public static final String BASE_URL = "/client/";
 
-    private final PsychologistService psychologistService;
+    private final ClientService clientService;
 
-    public PsychologistController(PsychologistService psychologistService) {
-        this.psychologistService = psychologistService;
+    public ClientController(ClientService clientService) {
+        this.clientService = clientService;
     }
 
-    @ApiOperation(value = "Get list of Psychologist in the System ", notes = "Return all Psychologist in the System.")
+    @ApiOperation(value = "Get list of Client in the System ", notes = "Return all Client in the System.")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Suceess|OK"),
             @ApiResponse(code = 401, message = "not authorized!"),
@@ -35,11 +34,11 @@ public class PsychologistController {
             @ApiResponse(code = 404, message = "not found!!!") })
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Psychologist> getAllPsychologists() {
-        return psychologistService.getAllPsychologists();
+    public List<Client> getAllClients() {
+        return clientService.getAllClients();
     }
 
-    @ApiOperation(value = "Create a Psychologist in the System ", notes = "Return the Psychologist that the System create.")
+    @ApiOperation(value = "Create a Client in the System ", notes = "Return the Client that the System create.")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Suceess|OK"),
             @ApiResponse(code = 401, message = "not authorized!"),
@@ -47,12 +46,11 @@ public class PsychologistController {
             @ApiResponse(code = 404, message = "not found!!!") })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Psychologist createPsychologist(@RequestBody Psychologist psychologist){
-        log.debug("Psychologist "+ psychologist);
-        return psychologistService.savePsychologist(psychologist);
+    public Client createClient(@RequestBody Client client){
+        return clientService.saveClient(client);
     }
 
-    @ApiOperation(value = "Delete All Psychologist in the System ", notes = "Return void.")
+    @ApiOperation(value = "Delete All Client in the System ", notes = "Return void.")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Suceess|OK"),
             @ApiResponse(code = 401, message = "not authorized!"),
@@ -61,11 +59,11 @@ public class PsychologistController {
     @DeleteMapping("all")
     @ResponseStatus(HttpStatus.OK)
     public void deleteAll() {
-        psychologistService.deleteAll();
+        clientService.deleteAll();
     }
 
 
-    @ApiOperation(value = "Delete a Psychologist by ID in the System ", notes = "Return void.")
+    @ApiOperation(value = "Delete a Client by ID in the System ", notes = "Return void.")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Suceess|OK"),
             @ApiResponse(code = 401, message = "not authorized!"),
@@ -74,11 +72,11 @@ public class PsychologistController {
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
     public void  deleteById(@PathVariable String id){
-        psychologistService.deleteById(id);
+        clientService.deleteById(id);
     }
 
 
-    @ApiOperation(value = "Get a Psychologist by ID in the System ", notes = "Return the Psychologist if finds the System.")
+    @ApiOperation(value = "Get a Client by ID in the System ", notes = "Return the Client if finds the System.")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Suceess|OK"),
             @ApiResponse(code = 401, message = "not authorized!"),
@@ -86,8 +84,8 @@ public class PsychologistController {
             @ApiResponse(code = 404, message = "not found!!!") })
     @GetMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Psychologist getPsychologistById(@PathVariable String id){
-        return psychologistService.findById(id);
+    public Client getClientById(@PathVariable String id){
+        return clientService.findById(id);
     }
 
 

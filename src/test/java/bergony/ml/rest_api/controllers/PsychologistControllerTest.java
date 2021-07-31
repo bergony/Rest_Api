@@ -3,7 +3,7 @@ package bergony.ml.rest_api.controllers;
 import bergony.ml.rest_api.model.psychologist.Approach;
 import bergony.ml.rest_api.model.psychologist.Psychologist;
 import bergony.ml.rest_api.model.psychologist.Specialization;
-import bergony.ml.rest_api.services.PsychologistService;
+import bergony.ml.rest_api.services.psychologistService.PsychologistService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;

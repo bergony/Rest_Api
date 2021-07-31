@@ -4,6 +4,8 @@ import bergony.ml.rest_api.model.psychologist.Approach;
 import bergony.ml.rest_api.model.psychologist.Psychologist;
 import bergony.ml.rest_api.model.psychologist.Specialization;
 import bergony.ml.rest_api.repositories.PsychologistRepository;
+import bergony.ml.rest_api.services.psychologistService.PsychologistService;
+import bergony.ml.rest_api.services.psychologistService.PsychologistServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

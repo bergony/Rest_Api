@@ -1,4 +1,4 @@
-package bergony.ml.rest_api.services;
+package bergony.ml.rest_api.services.psychologistService;
 
 import bergony.ml.rest_api.model.psychologist.Psychologist;
 import bergony.ml.rest_api.repositories.PsychologistRepository;
@@ -28,6 +28,7 @@ public class PsychologistServiceImpl implements PsychologistService {
     @Override
     public List<Psychologist> getAllPsychologists() {
         List<Psychologist> psychologistList = new ArrayList<>();
+
         psychologistRepository.findAll().forEach(psychologist -> {
             log.debug("Add the Psychologist: " + psychologist.getName());
             psychologistList.add(psychologist);

@@ -1,7 +1,6 @@
-package bergony.ml.rest_api.services;
+package bergony.ml.rest_api.services.psychologistService;
 
 import bergony.ml.rest_api.model.psychologist.Psychologist;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
